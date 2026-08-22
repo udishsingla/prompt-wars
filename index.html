@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudentVerse — Your Academic Universe</title>
+<meta name="description" content="All-in-one cinematic student workspace with interactive timetable, GPA tracker, goals and wellness hub.">
+<meta name="theme-color" content="#03050c">
+<link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+<link rel="manifest" href="manifest.json">
+
+<!-- Google Fonts for cinematic typography -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Outfit:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow: hidden;
+    background: #03040a;
+    font-family: 'Outfit', sans-serif;
+    color: white;
+    user-select: none;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* =========================
+   3D INTRO VIEW
+========================= */
+
+#intro {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    background:
+        radial-gradient(circle at 50% 30%, #15224a 0%, #080c1d 45%, #020308 85%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), visibility 1.2s;
+}
+
+#scene {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    cursor: grab;
+}
+
+#scene:active {
+    cursor: grabbing;
+}
+
+/* Background Atmosphere Glows */
+.ambient-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(64, 115, 255, 0.15) 0%, rgba(138, 75, 255, 0.05) 50%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    filter: blur(40px);
+    z-index: 1;
+}
+
+/* Intro Cinematic Header */
+.intro-text {
+    position: absolute;
+    top: 7%;
+    width: 100%;
+    text-align: center;
+    z-index: 5;
+    pointer-events: none;
+    transition: transform 0.8s ease, opacity 0.8s ease;
+}
+
+.intro-badge {
+    display: inline-block;
+    padding: 6px 18px;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: #ffd875;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
+}
+
+.intro-text h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(32px, 5.5vw, 68px);
+    letter-spacing: 14px;
+    font-weight: 700;
+    background: linear-gradient(180deg, #ffffff 0%, #cbd8f6 60%, #8ca4db 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 40px rgba(100, 160, 255, 0.3);
+}
+
+.intro-text p {
+    margin-top: 10px;
+    font-size: 13px;
+    letter-spacing: 6px;
+    color: #9ab0dc;
+    opacity: 0.85;
+    text-transform: uppercase;
+}
+
+/* Interactive Hint */
+.drag-hint {
+    position: absolute;
+    bottom: 16%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    pointer-events: none;
+    z-index: 5;
+    transition: opacity 0.5s ease;
+}
+
+/* =========================
+   ENTER BUTTON
+========================= */
+
+#enter {
+    position: absolute;
+    bottom: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 16px 42px;
+    border: 1px solid rgba(255, 215, 120, 0.45);
+    border-radius: 50px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 215, 120, 0.08));
+    backdrop-filter: blur(20px);
+    color: #ffffff;
+    cursor: pointer;
+    letter-spacing: 4px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    z-index: 20;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 215, 120, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+#enter::before {
+    content: '✦';
+    color: #ffd875;
+    font-size: 14px;
+    transition: transform 0.4s ease;
+}
+
+#enter:hover {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 215, 120, 0.2));
+    border-color: rgba(255, 225, 150, 0.8);
+    transform: translateX(-50%) translateY(-3px) scale(1.04);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 35px rgba(255, 215, 120, 0.45);
+}
+
+#enter:hover::before {
+    transform: rotate(90deg) scale(1.2);
+}
+
+#enter:active {
+    transform: translateX(-50%) translateY(1px) scale(0.98);
+}
+
+/* =========================
+   MAIN WEBSITE
+========================= */
+
+#main {
+    position: fixed;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    background:
+        radial-gradient(circle at 70% 30%, #172752, transparent 40%),
+        radial-gradient(circle at 20% 80%, #0d1633, transparent 45%),
+        linear-gradient(135deg, #050711 0%, #080d1d 100%);
+    padding: 40px 60px;
+    overflow-y: auto;
+    z-index: 5;
+    transition: opacity 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto 30px auto;
+}
+
+.logo {
+    font-family: 'Cinzel', serif;
+    font-size: 24px;
+    letter-spacing: 6px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #ffffff, #9ab9f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav-links {
+    display: flex;
+    gap: 36px;
+}
+
+.nav-links span {
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.65;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: 500;
+}
+
+.nav-links span:hover {
+    opacity: 1;
+    color: #ffd875;
+    text-shadow: 0 0 10px rgba(255, 216, 117, 0.4);
+}
+
+/* Hero Section */
+.hero {
+    min-height: calc(85vh - 70px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1400px;
+    margin: auto;
+    gap: 40px;
+}
+
+.hero-content {
+    max-width: 620px;
+}
+
+.hero-tag {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 20px;
+    background: rgba(120, 160, 255, 0.1);
+    border: 1px solid rgba(120, 160, 255, 0.25);
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: #9cbaff;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+}
+
+.hero-content h2 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(42px, 6.5vw, 84px);
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.hero-content h2 span {
+    background: linear-gradient(90deg, #6c9eff, #d69eff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    opacity: 0.9;
+}
+
+.hero-content p {
+    margin-top: 28px;
+    line-height: 1.8;
+    color: #a3b2d6;
+    font-size: 16px;
+    max-width: 520px;
+    font-weight: 300;
+}
+
+.dashboard-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 38px;
+    padding: 16px 36px;
+    border-radius: 40px;
+    background: linear-gradient(135deg, #ffffff 0%, #dbe6ff 100%);
+    color: #060a17;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(100, 150, 255, 0.25);
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.dashboard-button:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(100, 150, 255, 0.4);
+    background: #ffffff;
+}
+
+/* Dashboard Cards Grid */
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(2, 200px);
+    gap: 20px;
+}
+
+.card {
+    width: 200px;
+    height: 200px;
+    padding: 26px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 26px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.01));
+    backdrop-filter: blur(25px);
+    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 100% 0%, rgba(120, 170, 255, 0.15), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px) rotateX(6deg) rotateY(6deg);
+    border-color: rgba(160, 200, 255, 0.35);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03));
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(100, 150, 255, 0.15);
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.card .icon {
+    font-size: 34px;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
+}
+
+.card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.card p {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #8c9cc0;
+    line-height: 1.4;
+}
+
+/* Mobile Responsive */
+@media(max-width: 900px) {
+    #main {
+        padding: 25px 20px;
+    }
+    .hero {
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: auto;
+        padding-top: 20px;
+    }
+    .dashboard {
+        margin-top: 35px;
+        grid-template-columns: repeat(2, 1fr);
+        width: 100%;
+        max-width: 400px;
+    }
+    .card {
+        width: 100%;
+        height: 160px;
+        padding: 20px;
+    }
+    .nav-links {
+        display: none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     CINEMATIC 3D INTRO
+========================= -->
+<section id="intro">
+    <div class="ambient-glow"></div>
+    <div id="scene"></div>
+
+    <div class="intro-text">
+        <div class="intro-badge">✧ Grimoire of Knowledge ✧</div>
+        <h1>STUDENTVERSE</h1>
+        <p>YOUR LIFE • YOUR JOURNEY • YOUR WORLD</p>
+    </div>
+
+    <div class="drag-hint">Drag to rotate the book</div>
+
+    <button id="enter">
+        OPEN THE BOOK
+    </button>
+</section>
+
+<!-- =========================
+     MAIN WEBSITE
+========================= -->
+<section id="main">
+    <nav class="navbar">
+        <div class="logo">STUDENTVERSE</div>
+        <div class="nav-links">
+            <span>Dashboard</span>
+            <span>Academics</span>
+            <span>Goals</span>
+            <span>Wellness</span>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="hero-content">
+            <div class="hero-tag">Intelligent Life Companion</div>
+            <h2>
+                Your student life.
+                <br>
+                <span>One universe.</span>
+            </h2>
+            <p>
+                Manage your academics, deadlines, goals, time and personal growth 
+                from one intelligent, beautifully unified student platform.
+            </p>
+            <div class="dashboard-button" id="dbtn">
+                ENTER DASHBOARD &nbsp;→
+            </div>
+        </div>
+
+        <div class="dashboard">
+            <div class="card">
+                <div class="icon">📚</div>
+                <div>
+                    <h3>Academics</h3>
+                    <p>Assignments, grades & exams</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="icon">⏰</div>
+                <div>
+                    <h3>Time & Focus</h3>
+                    <p>Smart schedule & pomodoro</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="icon">🎯</div>
+                <div>
+                    <h3>Milestones</h3>
+                    <p>Track growth & ambitions</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="icon">🧠</div>
+                <div>
+                    <h3>Mind & Health</h3>
+                    <p>Balance, habits & wellbeing</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- THREE.JS & GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<script>
+/* ==========================================================================
+   STATE-OF-THE-ART 3D BOOK ENGINE
+   ========================================================================== */
+
+const container = document.getElementById("scene");
+
+// Scene & Camera
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(
+    38,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    100
+);
+// Cinematic 3D angle view
+camera.position.set(0.6, 0.4, 7.8);
+
+// WebGL Renderer with High Dynamic Range & Tone Mapping
+const renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    alpha: true,
+    powerPreference: "high-performance"
+});
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.25;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+container.appendChild(renderer.domElement);
+
+/* ==========================================
+   ADVANCED STUDIO LIGHTING
+========================================== */
+
+// Ambient Light for soft base fill
+const ambientLight = new THREE.AmbientLight(0xd4e2ff, 1.2);
+scene.add(ambientLight);
+
+// Key Directional Light (Warm Sun / Reading Lamp)
+const keyLight = new THREE.DirectionalLight(0xfffaed, 2.4);
+keyLight.position.set(4, 7, 5);
+keyLight.castShadow = true;
+keyLight.shadow.mapSize.width = 2048;
+keyLight.shadow.mapSize.height = 2048;
+keyLight.shadow.bias = -0.0001;
+scene.add(keyLight);
+
+// Cool Cyber/Celestial Rim Light for Edge Highlights
+const rimLight = new THREE.DirectionalLight(0x73a5ff, 2.0);
+rimLight.position.set(-6, -2, -4);
+scene.add(rimLight);
+
+// Gold Specular Accent Light
+const goldLight = new THREE.PointLight(0xffd27d, 3.5, 15);
+goldLight.position.set(2, -1, 3);
+scene.add(goldLight);
+
+// Inner Book Magical Glow Light (Lights up upon opening)
+const innerBookLight = new THREE.PointLight(0x7ab6ff, 0, 8);
+innerBookLight.position.set(0, 0, 0.4);
+scene.add(innerBookLight);
+
+/* ==========================================
+   PROCEDURAL HIGH-RES TEXTURE GENERATORS
+========================================== */
+
+// 1. FRONT COVER TEXTURE (Luxury Dark Navy + Gold Foil Filigree + Embossing)
+function createFrontCoverTexture() {
+    const canvas = document.createElement("canvas");
+    canvas.width = 1600;
+    canvas.height = 2200;
+    const ctx = canvas.getContext("2d");
+
+    // Base Leather Gradient
+    const bgGrad = ctx.createRadialGradient(800, 1100, 100, 800, 1100, 1400);
+    bgGrad.addColorStop(0, "#162548");
+    bgGrad.addColorStop(0.5, "#0d172e");
+    bgGrad.addColorStop(1, "#060b17");
+    ctx.fillStyle = bgGrad;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Subtle Leather Noise/Grain
+    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imgData.data;
+    for (let i = 0; i < data.length; i += 4) {
+        const noise = (Math.random() - 0.5) * 12;
+        data[i] = Math.min(255, Math.max(0, data[i] + noise));
+        data[i+1] = Math.min(255, Math.max(0, data[i+1] + noise));
+        data[i+2] = Math.min(255, Math.max(0, data[i+2] + noise));
+    }
+    ctx.putImageData(imgData, 0, 0);
+
+    // Gold Foil Gradient
+    const goldGrad = ctx.createLinearGradient(300, 300, 1300, 1900);
+    goldGrad.addColorStop(0, "#ffd97d");
+    goldGrad.addColorStop(0.3, "#fff3cf");
+    goldGrad.addColorStop(0.5, "#cca43b");
+    goldGrad.addColorStop(0.8, "#ffe599");
+    goldGrad.addColorStop(1, "#9e771e");
+
+    ctx.strokeStyle = goldGrad;
+    ctx.fillStyle = goldGrad;
+    ctx.shadowColor = "rgba(255, 215, 0, 0.4)";
+    ctx.shadowBlur = 12;
+
+    // Outer Decorative Border
+    ctx.lineWidth = 14;
+    ctx.strokeRect(70, 70, canvas.width - 140, canvas.height - 140);
+
+    // Inner Delicate Double Border
+    ctx.lineWidth = 4;
+    ctx.strokeRect(105, 105, canvas.width - 210, canvas.height - 210);
+    ctx.lineWidth = 2;
+    ctx.strokeRect(125, 125, canvas.width - 250, canvas.height - 250);
+
+    // Corner Ornaments
+    const corners = [
+        [125, 125], [canvas.width - 125, 125],
+        [125, canvas.height - 125], [canvas.width - 125, canvas.height - 125]
+    ];
+    corners.forEach(([cx, cy]) => {
+        ctx.beginPath();
+        ctx.arc(cx, cy, 35, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(cx, cy, 15, 0, Math.PI * 2);
+        ctx.fill();
+    });
+
+    // Top Category Header
+    ctx.textAlign = "center";
+    ctx.font = "bold 34px Georgia, serif";
+    ctx.letterSpacing = "10px";
+    ctx.fillText("✦  GRIMOIRE OF MASTERY  ✦", 800, 380);
+
+    // Celestial Emblem / Geometric Astrolabe in Center
+    ctx.save();
+    ctx.translate(800, 850);
+    ctx.lineWidth = 3;
+    
+    // Concentric celestial circles
+    for (let r of [180, 140, 100, 50]) {
+        ctx.beginPath();
+        ctx.arc(0, 0, r, 0, Math.PI * 2);
+        ctx.stroke();
+    }
+    // Rotating star points
+    ctx.beginPath();
+    for (let i = 0; i < 8; i++) {
+        const ang = (i * Math.PI) / 4;
+        const x1 = Math.cos(ang) * 195;
+        const y1 = Math.sin(ang) * 195;
+        const x2 = Math.cos(ang + Math.PI/8) * 80;
+        const y2 = Math.sin(ang + Math.PI/8) * 80;
+        ctx.lineTo(x1, y1);
+        ctx.lineTo(x2, y2);
+    }
+    ctx.closePath();
+    ctx.stroke();
+
+    // Center icon (Stylized Open Book)
+    ctx.font = "80px Arial";
+    ctx.fillText("📖", 0, 25);
+    ctx.restore();
+
+    // Main Book Title
+    ctx.font = "900 102px 'Cinzel', Georgia, serif";
+    ctx.shadowBlur = 20;
+    ctx.shadowColor = "rgba(255, 220, 120, 0.6)";
+    ctx.fillText("STUDENTVERSE", 800, 1380);
+
+    // Subtitle & Edition
+    ctx.font = "bold 36px Georgia, serif";
+    ctx.shadowBlur = 8;
+    ctx.fillText("YOUR LIFE  •  YOUR JOURNEY", 800, 1490);
+
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(450, 1560);
+    ctx.lineTo(1150, 1560);
+    ctx.stroke();
+
+    ctx.font = "30px Georgia, serif";
+    ctx.fillText("THE COMPLETE ALL-IN-ONE SYSTEM", 800, 1630);
+
+    ctx.font = "bold 32px Georgia, serif";
+    ctx.fillText("✦  VOLUME I  ✦", 800, 1920);
+
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.anisotropy = 16;
+    return texture;
+}
+
+// 2. SPINE TEXTURE (Gold Ribs + Vertical Lettering)
+function createSpineTexture() {
+    const canvas = document.createElement("canvas");
+    canvas.width = 300;
+    canvas.height = 2200;
+    const ctx = canvas.getContext("2d");
+
+    // Spine Navy Leather Gradient
+    const grad = ctx.createLinearGradient(0, 0, canvas.width, 0);
+    grad.addColorStop(0, "#080e1e");
+    grad.addColorStop(0.3, "#1a2c56");
+    grad.addColorStop(0.7, "#1a2c56");
+    grad.addColorStop(1, "#080e1e");
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Gold Foil Gradient
+    const goldGrad = ctx.createLinearGradient(0, 0, canvas.width, 0);
+    goldGrad.addColorStop(0, "#c99e32");
+    goldGrad.addColorStop(0.5, "#fff0be");
+    goldGrad.addColorStop(1, "#9e771e");
+    ctx.fillStyle = goldGrad;
+    ctx.strokeStyle = goldGrad;
+
+    // Raised Spine Ribs (Bands)
+    const ribPositions = [180, 450, 1750, 2020];
+    ribPositions.forEach(y => {
+        ctx.fillRect(15, y, canvas.width - 30, 24);
+        ctx.fillStyle = "rgba(0,0,0,0.4)";
+        ctx.fillRect(15, y + 24, canvas.width - 30, 6);
+        ctx.fillStyle = goldGrad;
+    });
+
+    // Vertical Book Title
+    ctx.save();
+    ctx.translate(canvas.width / 2, 1100);
+    ctx.rotate(Math.PI / 2);
+    ctx.font = "bold 65px 'Cinzel', Georgia, serif";
+    ctx.textAlign = "center";
+    ctx.shadowColor = "rgba(255, 215, 0, 0.4)";
+    ctx.shadowBlur = 10;
+    ctx.fillText("STUDENTVERSE  ✦  VOL. I", 0, 20);
+    ctx.restore();
+
+    const texture = new THREE.CanvasTexture(canvas);
+    return texture;
+}
+
+// 3. PAGE EDGES TEXTURE (Simulates thousands of stacked pages)
+function createPageEdgeTexture() {
+    const canvas = document.createElement("canvas");
+    canvas.width = 1024;
+    canvas.height = 256;
+    const ctx = canvas.getContext("2d");
+
+    // Base aged paper color
+    ctx.fillStyle = "#ede3cd";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Microscopic stacked paper lines
+    for (let y = 0; y < canvas.height; y += 2) {
+        const shade = 200 + Math.floor(Math.random() * 40);
+        const alpha = 0.4 + Math.random() * 0.5;
+        ctx.strokeStyle = `rgba(${shade - 40}, ${shade - 50}, ${shade - 70}, ${alpha})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+    }
+
+    // Edge shadows & gilding
+    const edgeGrad = ctx.createLinearGradient(0, 0, canvas.width, 0);
+    edgeGrad.addColorStop(0, "rgba(90, 70, 40, 0.35)");
+    edgeGrad.addColorStop(0.08, "transparent");
+    edgeGrad.addColorStop(0.92, "transparent");
+    edgeGrad.addColorStop(1, "rgba(90, 70, 40, 0.35)");
+    ctx.fillStyle = edgeGrad;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(4, 1);
+    return texture;
+}
+
+// 4. INSIDE OPEN PAGE TEXTURE (Crisp Parchment with UI previews & Wisdom)
+function createInsidePageTexture(pageNum) {
+    const canvas = document.createElement("canvas");
+    canvas.width = 1400;
+    canvas.height = 1900;
+    const ctx = canvas.getContext("2d");
+
+    // Warm parchment background
+    const bgGrad = ctx.createLinearGradient(0, 0, canvas.width, 0);
+    bgGrad.addColorStop(0, "#e8dcbe");
+    bgGrad.addColorStop(0.1, "#f7f1e1");
+    bgGrad.addColorStop(0.9, "#f7f1e1");
+    bgGrad.addColorStop(1, "#ded0b0");
+    ctx.fillStyle = bgGrad;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Inner Spine Crease Shadow
+    const shadowGrad = ctx.createLinearGradient(0, 0, 180, 0);
+    shadowGrad.addColorStop(0, "rgba(50, 30, 10, 0.35)");
+    shadowGrad.addColorStop(1, "transparent");
+    ctx.fillStyle = shadowGrad;
+    ctx.fillRect(0, 0, 180, canvas.height);
+
+    // Border & Heading
+    ctx.strokeStyle = "#8b7355";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(80, 80, canvas.width - 160, canvas.height - 160);
+
+    ctx.fillStyle = "#1e2942";
+    ctx.font = "bold 44px 'Cinzel', Georgia, serif";
+    ctx.textAlign = "center";
+    ctx.fillText("CHAPTER " + (pageNum || 1) + ": THE PORTAL", canvas.width / 2, 200);
+
+    ctx.font = "italic 26px 'Playfair Display', serif";
+    ctx.fillStyle = "#5c6b8a";
+    ctx.fillText("“Mastery is not an accident. It is an architecture of daily focus.”", canvas.width / 2, 270);
+
+    // Diagrams & Interactive Student Dashboard Mockup Lines
+    ctx.fillStyle = "rgba(30, 41, 66, 0.06)";
+    ctx.fillRect(140, 350, canvas.width - 280, 500);
+
+    ctx.fillStyle = "#1c2b4d";
+    ctx.font = "bold 30px 'Outfit', sans-serif";
+    ctx.textAlign = "left";
+    ctx.fillText("✦ ACTIVE MODULES", 180, 420);
+
+    const modules = [
+        "1. Advanced Algorithms & Analysis  ━━━━━  98% Complete",
+        "2. Physics & Quantum Mechanics     ━━━━━  92% Complete",
+        "3. Cognitive Psychology & Focus    ━━━━━  88% Complete",
+        "4. Personal Goals & Life Roadmap   ━━━━━  On Track"
+    ];
+    ctx.font = "24px 'Outfit', sans-serif";
+    ctx.fillStyle = "#3a4a6b";
+    modules.forEach((mod, idx) => {
+        ctx.fillText(mod, 180, 490 + idx * 60);
+    });
+
+    // Decorative Constellation / Chart
+    ctx.strokeStyle = "#4a6fa5";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(canvas.width / 2, 1150, 180, 0, Math.PI * 2);
+    ctx.stroke();
+
+    ctx.font = "bold 28px 'Cinzel', serif";
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#182a4d";
+    ctx.fillText("STUDENTVERSE CORE", canvas.width / 2, 1160);
+
+    // Bottom Page Number
+    ctx.font = "bold 24px Georgia, serif";
+    ctx.fillText("- " + (pageNum * 2 + 1) + " -", canvas.width / 2, 1780);
+
+    const texture = new THREE.CanvasTexture(canvas);
+    return texture;
+}
+
+/* ==========================================================================
+   3D BOOK HIERARCHY & GEOMETRY
+   ========================================================================== */
+
+// Realistic Physical Dimensions (Ratio: 1 : 1.38)
+const bookWidth = 3.3;
+const bookHeight = 4.5;
+const bookDepth = 0.52;
+const coverThickness = 0.06;
+const coverOverhang = 0.08;
+
+// Main Master Container (Controls world orientation, floating, mouse parallax)
+const bookMaster = new THREE.Group();
+scene.add(bookMaster);
+
+// Initial Cinematic Isometric Orientation
+bookMaster.rotation.set(0.25, -0.45, 0.08);
+bookMaster.position.set(0, -0.1, 0);
+
+// Inner Book Body
+const bookBody = new THREE.Group();
+bookMaster.add(bookBody);
+
+// Shared Materials
+const darkNavyLeatherMaterial = new THREE.MeshStandardMaterial({
+    color: 0x0c162d,
+    roughness: 0.38,
+    metalness: 0.25,
+});
+
+const frontCoverMaterial = new THREE.MeshStandardMaterial({
+    map: createFrontCoverTexture(),
+    roughness: 0.32,
+    metalness: 0.35,
+});
+
+const spineMaterial = new THREE.MeshStandardMaterial({
+    map: createSpineTexture(),
+    roughness: 0.38,
+    metalness: 0.25,
+});
+
+const pageEdgeMaterial = new THREE.MeshStandardMaterial({
+    map: createPageEdgeTexture(),
+    roughness: 0.85,
+    metalness: 0.05,
+});
+
+const goldTrimMaterial = new THREE.MeshStandardMaterial({
+    color: 0xffd369,
+    roughness: 0.2,
+    metalness: 0.9,
+});
+
+// -------------------------------------------------------------
+// 1. SPINE (Curved Spine Cylinder on Left Edge)
+// -------------------------------------------------------------
+const spineRadius = bookDepth / 2;
+const spineGeometry = new THREE.CylinderGeometry(
+    spineRadius,
+    spineRadius,
+    bookHeight + coverOverhang * 2,
+    32,
+    1,
+    false,
+    Math.PI * 0.5,
+    Math.PI
+);
+const spineMesh = new THREE.Mesh(spineGeometry, spineMaterial);
+spineMesh.position.set(-bookWidth / 2, 0, 0);
+spineMesh.rotation.y = Math.PI * 0.5;
+bookBody.add(spineMesh);
+
+// -------------------------------------------------------------
+// 2. BACK COVER (Rigid bottom cover)
+// -------------------------------------------------------------
+const backCoverGeometry = new THREE.BoxGeometry(
+    bookWidth + coverOverhang,
+    bookHeight + coverOverhang * 2,
+    coverThickness
+);
+const backCoverMesh = new THREE.Mesh(backCoverGeometry, darkNavyLeatherMaterial);
+backCoverMesh.position.set(coverOverhang / 2, 0, -bookDepth / 2);
+backCoverMesh.castShadow = true;
+backCoverMesh.receiveShadow = true;
+bookBody.add(backCoverMesh);
+
+// -------------------------------------------------------------
+// 3. PAGE BLOCK (Solid core of stacked pages with realistic edge texture)
+// -------------------------------------------------------------
+const pageBlockWidth = bookWidth - 0.05;
+const pageBlockHeight = bookHeight;
+const pageBlockDepth = bookDepth - coverThickness * 2;
+
+const pageBlockGeometry = new THREE.BoxGeometry(
+    pageBlockWidth,
+    pageBlockHeight,
+    pageBlockDepth
+);
+
+// Multi-material cube so edges have stacked page lines while interior matches paper
+const insidePaperMaterial = new THREE.MeshStandardMaterial({
+    color: 0xf4eedb,
+    roughness: 0.9
+});
+
+const pageBlockMaterials = [
+    pageEdgeMaterial,       // Right edge (Page lines)
+    insidePaperMaterial,    // Left edge (Spine side)
+    pageEdgeMaterial,       // Top edge (Page lines)
+    pageEdgeMaterial,       // Bottom edge (Page lines)
+    insidePaperMaterial,    // Front page surface
+    insidePaperMaterial     // Back page surface
+];
+
+const pageBlockMesh = new THREE.Mesh(pageBlockGeometry, pageBlockMaterials);
+pageBlockMesh.position.set(0.04, 0, 0);
+bookBody.add(pageBlockMesh);
+
+// -------------------------------------------------------------
+// 4. FRONT COVER WITH HINGE PIVOT (Opens smoothly like real hardcover)
+// -------------------------------------------------------------
+// Hinge group placed right at the left spine edge
+const frontCoverHinge = new THREE.Group();
+frontCoverHinge.position.set(-bookWidth / 2, 0, bookDepth / 2);
+bookBody.add(frontCoverHinge);
+
+// Front cover box attached relative to the hinge pivot
+const frontCoverGeometry = new THREE.BoxGeometry(
+    bookWidth + coverOverhang,
+    bookHeight + coverOverhang * 2,
+    coverThickness
+);
+
+// Front Cover Faces: Front = Gold Leather Texture, Inside = Endpaper, Edges = Navy
+const endpaperMaterial = new THREE.MeshStandardMaterial({
+    map: createInsidePageTexture(0),
+    roughness: 0.85
+});
+
+const frontCoverMaterials = [
+    darkNavyLeatherMaterial, // +X right edge
+    darkNavyLeatherMaterial, // -X left spine edge
+    darkNavyLeatherMaterial, // +Y top edge
+    darkNavyLeatherMaterial, // -Y bottom edge
+    frontCoverMaterial,      // +Z FRONT COVER (Gold Gilded Artwork)
+    endpaperMaterial         // -Z Inside Front Endpaper
+];
+
+const frontCoverMesh = new THREE.Mesh(frontCoverGeometry, frontCoverMaterials);
+// Offset mesh so its left edge aligns exactly with the hinge pivot
+frontCoverMesh.position.set((bookWidth + coverOverhang) / 2, 0, 0);
+frontCoverMesh.castShadow = true;
+frontCoverHinge.add(frontCoverMesh);
+
+// Metallic Gold Corner Protectors on Front Cover
+function addGoldCorner(x, y) {
+    const cornerGeo = new THREE.BoxGeometry(0.35, 0.35, coverThickness * 1.15);
+    const cornerMesh = new THREE.Mesh(cornerGeo, goldTrimMaterial);
+    cornerMesh.position.set(x, y, 0);
+    cornerMesh.rotation.z = Math.PI / 4;
+    frontCoverMesh.add(cornerMesh);
+}
+const cx = (bookWidth + coverOverhang) / 2 - 0.2;
+const cy = (bookHeight + coverOverhang * 2) / 2 - 0.2;
+addGoldCorner(cx, cy);
+addGoldCorner(cx, -cy);
+
+// -------------------------------------------------------------
+// 5. FLIPPING LEAF PAGES (Inside turnable pages)
+// -------------------------------------------------------------
+const flippingPages = [];
+const numPages = 4;
+
+for (let i = 0; i < numPages; i++) {
+    // Each page has its own hinge group at the spine
+    const pageHinge = new THREE.Group();
+    // Stagger slightly in z so pages don't clip
+    const zPos = (bookDepth / 2) - coverThickness - 0.02 - (i * 0.015);
+    pageHinge.position.set(-bookWidth / 2 + 0.05, 0, zPos);
+    bookBody.add(pageHinge);
+
+    const leafGeo = new THREE.BoxGeometry(
+        pageBlockWidth - 0.05,
+        pageBlockHeight - 0.05,
+        0.012
+    );
+
+    const leafMatFront = new THREE.MeshStandardMaterial({
+        map: createInsidePageTexture(i + 1),
+        roughness: 0.85
+    });
+
+    const leafMaterials = [
+        pageEdgeMaterial, pageEdgeMaterial,
+        pageEdgeMaterial, pageEdgeMaterial,
+        leafMatFront, leafMatFront
+    ];
+
+    const leafMesh = new THREE.Mesh(leafGeo, leafMaterials);
+    leafMesh.position.set((pageBlockWidth - 0.05) / 2, 0, 0);
+    pageHinge.add(leafMesh);
+
+    flippingPages.push(pageHinge);
+}
+
+// -------------------------------------------------------------
+// 6. FLOATING DUST & MAGIC GLOW PARTICLES
+// -------------------------------------------------------------
+const particleCount = 800;
+const particleGeometry = new THREE.BufferGeometry();
+const particlePositions = new Float32Array(particleCount * 3);
+const particleScales = new Float32Array(particleCount);
+
+for (let i = 0; i < particleCount; i++) {
+    particlePositions[i * 3] = (Math.random() - 0.5) * 18;
+    particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 14;
+    particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 14;
+    particleScales[i] = Math.random() * 0.04 + 0.01;
+}
+
+particleGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+
+const particleMaterial = new THREE.PointsMaterial({
+    color: 0x98c2ff,
+    size: 0.035,
+    transparent: true,
+    opacity: 0.65,
+    blending: THREE.AdditiveBlending
+});
+
+const particles = new THREE.Points(particleGeometry, particleMaterial);
+scene.add(particles);
+
+// Soft Contact Shadow Plane underneath Book
+const shadowPlaneGeo = new THREE.PlaneGeometry(8, 8);
+const shadowCanvas = document.createElement("canvas");
+shadowCanvas.width = 256;
+shadowCanvas.height = 256;
+const sCtx = shadowCanvas.getContext("2d");
+const sGrad = sCtx.createRadialGradient(128, 128, 10, 128, 128, 120);
+sGrad.addColorStop(0, "rgba(0, 0, 0, 0.7)");
+sGrad.addColorStop(0.4, "rgba(0, 0, 0, 0.3)");
+sGrad.addColorStop(1, "transparent");
+sCtx.fillStyle = sGrad;
+sCtx.fillRect(0, 0, 256, 256);
+
+const shadowTexture = new THREE.CanvasTexture(shadowCanvas);
+const shadowMat = new THREE.MeshBasicMaterial({
+    map: shadowTexture,
+    transparent: true,
+    opacity: 0.65,
+    depthWrite: false
+});
+const shadowPlane = new THREE.Mesh(shadowPlaneGeo, shadowMat);
+shadowPlane.rotation.x = -Math.PI / 2;
+shadowPlane.position.y = -2.8;
+scene.add(shadowPlane);
+
+/* ==========================================================================
+   INTERACTIVITY & SMOOTH PARALLAX
+   ========================================================================== */
+
+let targetRotX = 0.25;
+let targetRotY = -0.45;
+let isBookOpened = false;
+let isDragging = false;
+let previousMousePosition = { x: 0, y: 0 };
+
+// Mouse move parallax
+window.addEventListener("mousemove", (e) => {
+    if (isBookOpened) return;
+
+    if (isDragging) {
+        const deltaX = e.clientX - previousMousePosition.x;
+        const deltaY = e.clientY - previousMousePosition.y;
+        targetRotY += deltaX * 0.008;
+        targetRotX += deltaY * 0.008;
+        // Clamp vertical tilt
+        targetRotX = Math.max(-0.6, Math.min(0.6, targetRotX));
+        previousMousePosition = { x: e.clientX, y: e.clientY };
+    } else {
+        const normX = (e.clientX / window.innerWidth - 0.5) * 2;
+        const normY = (e.clientY / window.innerHeight - 0.5) * 2;
+        targetRotY = -0.45 + normX * 0.4;
+        targetRotX = 0.25 - normY * 0.25;
+    }
+});
+
+// Drag to manually inspect the 3D book
+container.addEventListener("mousedown", (e) => {
+    if (isBookOpened) return;
+    isDragging = true;
+    previousMousePosition = { x: e.clientX, y: e.clientY };
+});
+
+window.addEventListener("mouseup", () => {
+    isDragging = false;
+});
+
+// Touch controls for mobile
+window.addEventListener("touchmove", (e) => {
+    if (isBookOpened || e.touches.length === 0) return;
+    const touch = e.touches[0];
+    const normX = (touch.clientX / window.innerWidth - 0.5) * 2;
+    const normY = (touch.clientY / window.innerHeight - 0.5) * 2;
+    targetRotY = -0.45 + normX * 0.5;
+    targetRotX = 0.25 - normY * 0.3;
+});
+
+/* ==========================================
+   MAIN RENDER LOOP
+========================================== */
+
+const clock = new THREE.Clock();
+
+function animate() {
+    requestAnimationFrame(animate);
+    const elapsedTime = clock.getElapsedTime();
+
+    // Natural Floating levitation
+    if (!isBookOpened) {
+        bookMaster.position.y = -0.1 + Math.sin(elapsedTime * 1.5) * 0.12;
+        shadowPlane.scale.setScalar(1 + Math.sin(elapsedTime * 1.5) * 0.08);
+
+        // Smooth Lerp Rotation towards mouse
+        bookMaster.rotation.y += (targetRotY - bookMaster.rotation.y) * 0.06;
+        bookMaster.rotation.x += (targetRotX - bookMaster.rotation.x) * 0.06;
+    }
+
+    // Slow ambient rotation for particles
+    particles.rotation.y = elapsedTime * 0.03;
+    particles.rotation.x = Math.sin(elapsedTime * 0.02) * 0.1;
+
+    renderer.render(scene, camera);
+}
+
+animate();
+
+/* ==========================================================================
+   CINEMATIC "OPEN THE BOOK" OPENING SEQUENCE
+   ========================================================================== */
+
+const enterBtn = document.getElementById("enter");
+const introSection = document.getElementById("intro");
+const mainSection = document.getElementById("main");
+const introText = document.querySelector(".intro-text");
+const dragHint = document.querySelector(".drag-hint");
+
+enterBtn.addEventListener("click", openBookExperience);
+
+function openBookExperience() {
+    if (isBookOpened) return;
+    isBookOpened = true;
+    enterBtn.style.pointerEvents = "none";
+
+    const tl = gsap.timeline();
+
+    // 1. Fade UI text smoothly
+    tl.to([introText, enterBtn, dragHint], {
+        opacity: 0,
+        y: -30,
+        duration: 0.6,
+        ease: "power2.inOut"
+    });
+
+    // 2. Rotate Book to face front and tilt slightly
+    tl.to(bookMaster.position, {
+        x: 0,
+        y: 0,
+        z: 0.5,
+        duration: 1.4,
+        ease: "power3.out"
+    }, 0.2);
+
+    tl.to(bookMaster.rotation, {
+        x: 0.15,
+        y: 0.05,
+        z: 0,
+        duration: 1.4,
+        ease: "power3.out"
+    }, 0.2);
+
+    // 3. Open Front Cover with Realistic Hinge Action
+    tl.to(frontCoverHinge.rotation, {
+        y: -Math.PI * 0.95, // Opens almost 180 degrees
+        duration: 2.0,
+        ease: "power3.inOut"
+    }, 0.8);
+
+    // 4. Power up Inner Magical Light as cover opens
+    tl.to(innerBookLight, {
+        intensity: 8,
+        distance: 12,
+        duration: 1.5,
+        ease: "power2.in"
+    }, 1.2);
+
+    // 5. Flip Pages Sequentially with Natural Page-Turn Arc
+    flippingPages.forEach((page, idx) => {
+        tl.to(page.rotation, {
+            y: -Math.PI * (0.90 - idx * 0.02),
+            duration: 1.3,
+            ease: "power2.inOut"
+        }, 1.3 + idx * 0.22);
+    });
+
+    // 6. Camera dives deep into the center of the book
+    tl.to(camera.position, {
+        x: 0,
+        y: 0,
+        z: 1.8,
+        duration: 2.8,
+        ease: "power3.inOut"
+    }, 2.0);
+
+    // 7. Magic flash & Transition to Main Dashboard
+    tl.to(introSection, {
+        opacity: 0,
+        duration: 1.2,
+        ease: "power2.inOut",
+        onComplete: () => {
+            introSection.style.visibility = "hidden";
+            mainSection.style.visibility = "visible";
+            gsap.to(mainSection, {
+                opacity: 1,
+                duration: 1.4,
+                ease: "power2.out"
+            });
+        }
+    }, 3.4);
+}
+
+/* ==========================================
+   WINDOW RESIZE HANDLER
+========================================== */
+
+window.addEventListener("resize", () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+});
+
+const dbtn = document.getElementById("dbtn");
+if (dbtn) {
+    dbtn.addEventListener("click", () => {
+        if (window.SoundFX) window.SoundFX.playChime();
+        setTimeout(() => {
+            window.location.href = "dashboard.html";
+        }, 300);
+    });
+}
+</script>
+<script src="js/audio.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+    });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudentVerse — Academics & GPA</title>
+    <meta name="description" content="Academic course manager, interactive syllabus tracker, and real-time GPA/CGPA calculator.">
+    <meta name="theme-color" content="#03050c">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/academics.css">
+</head>
+<body>
+
+<!-- Page Loader -->
+<div id="pageLoader">
+    <div class="loader-content">
+        <div class="loader-logo">ACADEMICS</div>
+        <div class="loader-line"><div class="loader-progress"></div></div>
+    </div>
+</div>
+
+<div class="app-layout">
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <a href="dashboard.html" class="logo-container">
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+            </div>
+            <div class="logo-text">StudentVerse</div>
+        </a>
+
+        <div class="nav-section">
+            <div class="nav-title">WORKSPACE</div>
+            <a href="dashboard.html" class="nav-item">
+                <span class="nav-icon">⌂</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="academics.html" class="nav-item active">
+                <span class="nav-icon">▣</span>
+                <span>Academics</span>
+            </a>
+            <a href="timetable.html" class="nav-item">
+                <span class="nav-icon">▦</span>
+                <span>Timetable</span>
+            </a>
+            <a href="goals.html" class="nav-item">
+                <span class="nav-icon">◎</span>
+                <span>Goals</span>
+            </a>
+            <a href="wellness.html" class="nav-item">
+                <span class="nav-icon">◌</span>
+                <span>Wellness</span>
+            </a>
+
+            <div class="nav-title">ACCOUNT</div>
+            <a href="profile.html" class="nav-item">
+                <span class="nav-icon">○</span>
+                <span>Profile & ID</span>
+            </a>
+        </div>
+
+        <div class="sidebar-bottom">
+            <a href="profile.html" class="profile-mini">
+                <div class="avatar-mini" id="sidebarProfileAvatar">⚡</div>
+                <div class="profile-mini-info">
+                    <div class="profile-mini-name" id="sidebarProfileName">Alex Mercer</div>
+                    <div class="profile-mini-role" id="sidebarProfileRole">Computer Science</div>
+                </div>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="topbar">
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+
+            <button class="search-command-btn">
+                <span>🔍</span>
+                <span class="search-command-text">Quick Search or Action...</span>
+                <span class="kbd-shortcut">Ctrl + K</span>
+            </button>
+
+            <div class="topbar-actions">
+                <div class="topbar-live-clock" id="topbarClock">--:--:--</div>
+                <a href="profile.html" class="topbar-btn" title="Profile">👤</a>
+            </div>
+        </header>
+
+        <!-- Header -->
+        <div class="academics-header">
+            <div>
+                <h1 class="hero-title">Academic Universe 🎓</h1>
+                <p class="hero-subtitle">Track course syllabus coverage, exam milestones, and calculate target GPAs.</p>
+            </div>
+            <button class="btn btn-primary" id="openGpaCalcBtn">
+                <span>🧮</span> Open GPA Calculator
+            </button>
+        </div>
+
+        <!-- GPA Banner -->
+        <div class="gpa-summary-card">
+            <div>
+                <span class="stat-label" style="margin-bottom: 8px; display: block;">Cumulative Grade Point Average</span>
+                <div class="gpa-main-display">
+                    <div class="gpa-big-number" id="acadCgpa">3.84</div>
+                    <div class="gpa-scale">/ 4.00</div>
+                </div>
+            </div>
+
+            <div class="gpa-breakdown">
+                <div class="gpa-stat-item">
+                    <span class="gpa-stat-title">Semester GPA</span>
+                    <span class="gpa-stat-val" id="acadSemGpa" style="color: var(--cyan);">3.90</span>
+                </div>
+                <div class="gpa-stat-item">
+                    <span class="gpa-stat-title">Credits Earned</span>
+                    <span class="gpa-stat-val" id="acadCredits" style="color: var(--purple);">78</span>
+                </div>
+                <div class="gpa-stat-item">
+                    <span class="gpa-stat-title">Department Rank</span>
+                    <span class="gpa-stat-val" id="acadRank" style="color: var(--gold);">#4 / 120</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Courses Section -->
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+            <h2 style="font-size: 20px; font-weight: 700;">Active Enrolled Courses</h2>
+            <span class="badge badge-cyan">Semester 5</span>
+        </div>
+
+        <div class="courses-grid" id="coursesGrid">
+            <!-- Dynamically populated from store -->
+        </div>
+    </main>
+</div>
+
+<!-- Dynamic GPA Calculator Modal -->
+<div class="modal-backdrop" id="gpaCalcModal">
+    <div class="modal-card" style="max-width: 620px;">
+        <div class="modal-header">
+            <h3 class="modal-title">🧮 Interactive GPA Calculator</h3>
+            <button class="modal-close" id="closeGpaCalcBtn">✕</button>
+        </div>
+
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 18px;">
+            Add your semester courses, credit weights, and letter grades to simulate your semester GPA in real-time.
+        </p>
+
+        <table class="calc-table">
+            <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th style="width: 80px;">Credits</th>
+                    <th style="width: 120px;">Grade</th>
+                    <th style="width: 40px;"></th>
+                </tr>
+            </thead>
+            <tbody id="calcTableBody">
+                <!-- Populated dynamically -->
+            </tbody>
+        </table>
+
+        <button class="btn btn-secondary" id="addCalcRowBtn" style="font-size: 12.5px; padding: 6px 14px; margin-bottom: 20px;">
+            + Add Course Row
+        </button>
+
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 16px; display: flex; justify-content: space-around; text-align: center;">
+            <div>
+                <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Calculated Sem GPA</div>
+                <div style="font-size: 26px; font-weight: 800; color: var(--cyan);" id="calcLiveSemGpa">3.90</div>
+            </div>
+            <div style="width: 1px; background: var(--border-subtle);"></div>
+            <div>
+                <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Projected CGPA</div>
+                <div style="font-size: 26px; font-weight: 800; color: var(--gold);" id="calcLiveCgpa">3.85</div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-primary" id="applyGpaBtn">Save GPA to Profile</button>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="js/store.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/app.js"></script>
+<script src="js/academics.js"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "name": "StudentVerse — Your Academic Universe",
+  "short_name": "StudentVerse",
+  "description": "All-in-one cinematic student workspace with interactive timetable, GPA tracker, goals and wellness hub.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#03050c",
+  "theme_color": "#03050c",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "assets/icons/favicon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

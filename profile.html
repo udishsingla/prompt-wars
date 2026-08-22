@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudentVerse — Student Profile & ID</title>
+    <meta name="description" content="Holographic student identification card, academic profile editor, achievement badges, and JSON backup suite.">
+    <meta name="theme-color" content="#03050c">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/profile.css">
+</head>
+<body>
+
+<!-- Page Loader -->
+<div id="pageLoader">
+    <div class="loader-content">
+        <div class="loader-logo">PROFILE</div>
+        <div class="loader-line"><div class="loader-progress"></div></div>
+    </div>
+</div>
+
+<div class="app-layout">
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <a href="dashboard.html" class="logo-container">
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+            </div>
+            <div class="logo-text">StudentVerse</div>
+        </a>
+
+        <div class="nav-section">
+            <div class="nav-title">WORKSPACE</div>
+            <a href="dashboard.html" class="nav-item">
+                <span class="nav-icon">⌂</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="academics.html" class="nav-item">
+                <span class="nav-icon">▣</span>
+                <span>Academics</span>
+            </a>
+            <a href="timetable.html" class="nav-item">
+                <span class="nav-icon">▦</span>
+                <span>Timetable</span>
+            </a>
+            <a href="goals.html" class="nav-item">
+                <span class="nav-icon">◎</span>
+                <span>Goals</span>
+            </a>
+            <a href="wellness.html" class="nav-item">
+                <span class="nav-icon">◌</span>
+                <span>Wellness</span>
+            </a>
+
+            <div class="nav-title">ACCOUNT</div>
+            <a href="profile.html" class="nav-item active">
+                <span class="nav-icon">○</span>
+                <span>Profile & ID</span>
+            </a>
+        </div>
+
+        <div class="sidebar-bottom">
+            <a href="profile.html" class="profile-mini">
+                <div class="avatar-mini" id="sidebarProfileAvatar">⚡</div>
+                <div class="profile-mini-info">
+                    <div class="profile-mini-name" id="sidebarProfileName">Alex Mercer</div>
+                    <div class="profile-mini-role" id="sidebarProfileRole">Computer Science</div>
+                </div>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="topbar">
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+
+            <button class="search-command-btn">
+                <span>🔍</span>
+                <span class="search-command-text">Quick Search or Action...</span>
+                <span class="kbd-shortcut">Ctrl + K</span>
+            </button>
+
+            <div class="topbar-actions">
+                <div class="topbar-live-clock" id="topbarClock">--:--:--</div>
+                <a href="profile.html" class="topbar-btn" title="Profile">👤</a>
+            </div>
+        </header>
+
+        <div style="margin-bottom: 32px;">
+            <h1 class="hero-title">Student Identity & ID Card ○</h1>
+            <p class="hero-subtitle">Interactive 3D student credential, profile customization, and data backup controls.</p>
+        </div>
+
+        <div class="profile-layout">
+            <!-- Left: 3D Holographic ID Card -->
+            <div class="id-card-wrapper">
+                <div class="holo-id-card" id="holoIdCard">
+                    <div class="holo-top">
+                        <div class="holo-chip"></div>
+                        <span class="badge badge-cyan" style="font-size:10px;">VERIFIED ID</span>
+                    </div>
+
+                    <div class="holo-avatar-wrap">
+                        <div class="holo-avatar" id="holoCardAvatar">⚡</div>
+                        <h2 class="holo-name" id="holoCardName">Alex Mercer</h2>
+                        <div class="holo-major" id="holoCardMajor">Computer Science & Eng.</div>
+                    </div>
+
+                    <div>
+                        <div class="holo-details">
+                            <div class="holo-detail-item">
+                                <span class="holo-detail-label">INSTITUTE</span>
+                                <span class="holo-detail-val" id="holoCardUniv" style="font-size:11px;">Apex Institute</span>
+                            </div>
+                            <div class="holo-detail-item" style="text-align: right;">
+                                <span class="holo-detail-label">STUDENT ID</span>
+                                <span class="holo-detail-val" id="holoCardId">STU-8849-CY</span>
+                            </div>
+                        </div>
+
+                        <div class="holo-details" style="margin-top: 10px;">
+                            <div class="holo-detail-item">
+                                <span class="holo-detail-label">CGPA</span>
+                                <span class="holo-detail-val" style="color: var(--cyan);" id="holoCardCgpa">3.84</span>
+                            </div>
+                            <div class="holo-detail-item" style="text-align: right;">
+                                <span class="holo-detail-label">FOCUS STREAK</span>
+                                <span class="holo-detail-val" style="color: var(--gold);" id="holoCardStreak">14d</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Profile Editor & Badges -->
+            <div style="display: flex; flex-direction: column; gap: 28px;">
+                <!-- Profile Edit Form -->
+                <div class="glass-panel" style="padding: 28px;">
+                    <div class="panel-header">
+                        <h3 class="panel-title">✏️ Edit Student Profile</h3>
+                        <span class="badge badge-purple">Auto-Syncs</span>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-input" id="profileNameInput">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Avatar Emoji / Icon</label>
+                            <input type="text" class="form-input" id="profileAvatarInput" placeholder="e.g. ⚡, 🚀, 🎓, 🌌">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">University / College</label>
+                            <input type="text" class="form-input" id="profileUnivInput">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Major / Specialization</label>
+                            <input type="text" class="form-input" id="profileMajorInput">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Academic Year / Term</label>
+                            <input type="text" class="form-input" id="profileYearInput">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Student ID Code</label>
+                            <input type="text" class="form-input" id="profileIdInput">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Bio / Academic Interests</label>
+                        <textarea class="form-textarea" id="profileBioInput" rows="2"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">University Email</label>
+                        <input type="email" class="form-input" id="profileEmailInput">
+                    </div>
+
+                    <div style="text-align: right; margin-top: 10px;">
+                        <button class="btn btn-primary" id="saveProfileBtn">Save Profile Changes</button>
+                    </div>
+                </div>
+
+                <!-- Academic Achievements & Badges -->
+                <div class="glass-panel" style="padding: 28px;">
+                    <div class="panel-header">
+                        <h3 class="panel-title">🏆 Academic Achievements & Badges</h3>
+                        <span class="badge badge-gold">4 / 6 Unlocked</span>
+                    </div>
+
+                    <div class="badges-grid">
+                        <div class="badge-item">
+                            <span class="badge-icon">🎓</span>
+                            <span class="badge-title">Dean's List</span>
+                            <span class="badge-desc">CGPA &gt; 3.80 in Sem 5</span>
+                        </div>
+                        <div class="badge-item">
+                            <span class="badge-icon">⚡</span>
+                            <span class="badge-title">Algorithmist</span>
+                            <span class="badge-desc">80%+ in DSA syllabus</span>
+                        </div>
+                        <div class="badge-item">
+                            <span class="badge-icon">🔥</span>
+                            <span class="badge-title">Flow Master</span>
+                            <span class="badge-desc">14-day study streak</span>
+                        </div>
+                        <div class="badge-item">
+                            <span class="badge-icon">💧</span>
+                            <span class="badge-title">Hydrated Mind</span>
+                            <span class="badge-desc">Hit water target 7x</span>
+                        </div>
+                        <div class="badge-item locked">
+                            <span class="badge-icon">🚀</span>
+                            <span class="badge-title">Hackathon King</span>
+                            <span class="badge-desc">Complete project goal</span>
+                        </div>
+                        <div class="badge-item locked">
+                            <span class="badge-icon">🌟</span>
+                            <span class="badge-title">Valedictorian</span>
+                            <span class="badge-desc">Reach Top 1% in Rank</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Management & Backups -->
+                <div class="glass-panel" style="padding: 28px;">
+                    <div class="panel-header">
+                        <h3 class="panel-title">💾 Data Backup & Workspace Management</h3>
+                    </div>
+
+                    <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+                        Export all your goals, syllabus progress, schedule, and profile as a clean JSON backup file. You can restore it anytime or migrate between devices.
+                    </p>
+
+                    <div class="backup-actions">
+                        <button class="btn btn-secondary" id="exportDataBtn">
+                            <span>📥</span> Download JSON Backup
+                        </button>
+
+                        <button class="btn btn-secondary" id="importDataBtn">
+                            <span>📤</span> Restore from Backup
+                        </button>
+                        <input type="file" id="importFileInput" accept=".json" style="display: none;">
+
+                        <button class="btn btn-danger" id="resetDataBtn">
+                            <span>🔄</span> Reset to Defaults
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Scripts -->
+<script src="js/store.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/app.js"></script>
+<script src="js/profile.js"></script>
+</body>
+</html>

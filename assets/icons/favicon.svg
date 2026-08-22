@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1026" />
+      <stop offset="50%" stop-color="#03050c" />
+      <stop offset="100%" stop-color="#020307" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="50%" stop-color="#818cf8" />
+      <stop offset="100%" stop-color="#c084fc" />
+    </linearGradient>
+    <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="#6366f1" stop-opacity="0" />
+    </radialGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="512" height="512" rx="128" fill="url(#bgGrad)" stroke="rgba(255,255,255,0.12)" stroke-width="8"/>
+  <circle cx="256" cy="256" r="180" fill="url(#glowGrad)"/>
+
+  <!-- Celestial Orbit Rings -->
+  <ellipse cx="256" cy="256" rx="170" ry="60" fill="none" stroke="rgba(56, 189, 248, 0.4)" stroke-width="3" transform="rotate(-25 256 256)"/>
+  <ellipse cx="256" cy="256" rx="170" ry="60" fill="none" stroke="rgba(192, 132, 252, 0.3)" stroke-width="2" transform="rotate(35 256 256)"/>
+
+  <!-- Central Cosmic Book Icon -->
+  <g filter="url(#glow)" transform="translate(136, 140) scale(0.95)">
+    <!-- Book Left Page -->
+    <path d="M125 180 C80 150, 20 160, 0 170 L0 30 C20 20, 80 10, 125 40 Z" fill="url(#accentGrad)" opacity="0.95"/>
+    <!-- Book Right Page -->
+    <path d="M125 180 C170 150, 230 160, 250 170 L250 30 C230 20, 170 10, 125 40 Z" fill="url(#accentGrad)"/>
+    <!-- Spine / Portal Core -->
+    <line x1="125" y1="35" x2="125" y2="185" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+    
+    <!-- Sparkles / Star Elements -->
+    <polygon points="125,5 130,20 145,25 130,30 125,45 120,30 105,25 120,20" fill="#ffd700"/>
+    <circle cx="60" cy="90" r="4" fill="#ffffff" opacity="0.8"/>
+    <circle cx="190" cy="90" r="4" fill="#ffffff" opacity="0.8"/>
+    <circle cx="80" cy="130" r="3" fill="#38bdf8" opacity="0.9"/>
+    <circle cx="170" cy="130" r="3" fill="#c084fc" opacity="0.9"/>
+  </g>
+</svg>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudentVerse — Dashboard</title>
+    <meta name="description" content="Cinematic academic dashboard for students with live schedule, GPA overview and workload analytics.">
+    <meta name="theme-color" content="#03050c">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+<!-- Page Loader -->
+<div id="pageLoader">
+    <div class="loader-content">
+        <div class="loader-logo">STUDENTVERSE</div>
+        <div class="loader-line">
+            <div class="loader-progress"></div>
+        </div>
+    </div>
+</div>
+
+<div class="app-layout">
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <a href="dashboard.html" class="logo-container">
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+            </div>
+            <div class="logo-text">StudentVerse</div>
+        </a>
+
+        <div class="nav-section">
+            <div class="nav-title">WORKSPACE</div>
+            <a href="dashboard.html" class="nav-item active">
+                <span class="nav-icon">⌂</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="academics.html" class="nav-item">
+                <span class="nav-icon">▣</span>
+                <span>Academics</span>
+            </a>
+            <a href="timetable.html" class="nav-item">
+                <span class="nav-icon">▦</span>
+                <span>Timetable</span>
+            </a>
+            <a href="goals.html" class="nav-item">
+                <span class="nav-icon">◎</span>
+                <span>Goals</span>
+            </a>
+            <a href="wellness.html" class="nav-item">
+                <span class="nav-icon">◌</span>
+                <span>Wellness</span>
+            </a>
+
+            <div class="nav-title">ACCOUNT</div>
+            <a href="profile.html" class="nav-item">
+                <span class="nav-icon">○</span>
+                <span>Profile & ID</span>
+            </a>
+        </div>
+
+        <div class="sidebar-bottom">
+            <a href="profile.html" class="profile-mini">
+                <div class="avatar-mini" id="sidebarProfileAvatar">⚡</div>
+                <div class="profile-mini-info">
+                    <div class="profile-mini-name" id="sidebarProfileName">Alex Mercer</div>
+                    <div class="profile-mini-role" id="sidebarProfileRole">Computer Science</div>
+                </div>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <!-- Topbar -->
+        <header class="topbar">
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+
+            <button class="search-command-btn" id="openCmdPaletteBtn">
+                <span>🔍</span>
+                <span class="search-command-text">Quick Search or Action...</span>
+                <span class="kbd-shortcut">Ctrl + K</span>
+            </button>
+
+            <div class="topbar-actions">
+                <div class="topbar-live-clock" id="topbarClock">--:--:--</div>
+                <a href="wellness.html" class="topbar-btn" title="Focus Timer">⏱</a>
+                <a href="profile.html" class="topbar-btn" title="Profile">👤</a>
+            </div>
+        </header>
+
+        <!-- Dashboard Hero -->
+        <section class="dashboard-hero">
+            <div>
+                <h1 class="hero-title" id="dashGreeting">Welcome back, Alex 🚀</h1>
+                <p class="hero-subtitle">Here is what is happening across your courses, schedule, and goals today.</p>
+            </div>
+            <div class="hero-actions">
+                <a href="goals.html" class="btn btn-secondary">+ Add Goal</a>
+                <a href="academics.html" class="btn btn-primary">Academic Hub →</a>
+            </div>
+        </section>
+
+        <!-- Stat Cards Grid -->
+        <section class="stats-grid">
+            <div class="glass-panel stat-card cyan">
+                <div class="stat-top">
+                    <span class="stat-label">Cumulative GPA</span>
+                    <div class="stat-icon" style="background: rgba(56, 189, 248, 0.15); color: var(--cyan);">🎓</div>
+                </div>
+                <div class="stat-value" id="metricCgpa">3.84</div>
+                <div class="stat-sub">
+                    <span style="color: var(--emerald);">▲ Top 5%</span>
+                    <span>in Major</span>
+                </div>
+            </div>
+
+            <div class="glass-panel stat-card purple">
+                <div class="stat-top">
+                    <span class="stat-label">Active Courses</span>
+                    <div class="stat-icon" style="background: rgba(168, 85, 247, 0.15); color: var(--purple);">📚</div>
+                </div>
+                <div class="stat-value" id="metricCourses">4</div>
+                <div class="stat-sub">
+                    <span>14 Total Credits</span>
+                </div>
+            </div>
+
+            <div class="glass-panel stat-card gold">
+                <div class="stat-top">
+                    <span class="stat-label">Goals Completed</span>
+                    <div class="stat-icon" style="background: rgba(251, 191, 36, 0.15); color: var(--gold);">🎯</div>
+                </div>
+                <div class="stat-value" id="metricGoals">1/4</div>
+                <div class="stat-sub">
+                    <span style="color: var(--gold);">⚡ In Progress</span>
+                </div>
+            </div>
+
+            <div class="glass-panel stat-card emerald">
+                <div class="stat-top">
+                    <span class="stat-label">Wellness Score</span>
+                    <div class="stat-icon" style="background: rgba(16, 185, 129, 0.15); color: var(--emerald);">🌱</div>
+                </div>
+                <div class="stat-value" id="metricWellness">88%</div>
+                <div class="stat-sub">
+                    <span style="color: var(--emerald);">🔥 14 Day Streak</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Dashboard 2-Column Grid -->
+        <div class="dashboard-grid">
+            <!-- Left: Weekly Workload & Focus Analytics -->
+            <div class="glass-panel panel">
+                <div class="panel-header">
+                    <h3 class="panel-title">
+                        <span style="color: var(--cyan);">📊</span>
+                        Weekly Workload & Study Velocity
+                    </h3>
+                    <span class="badge badge-cyan">Semester 5</span>
+                </div>
+
+                <div class="workload-bars">
+                    <div class="bar-col">
+                        <div class="bar-track"><div class="bar-fill" data-height="75%"></div></div>
+                        <span class="bar-day">MON</span>
+                    </div>
+                    <div class="bar-col">
+                        <div class="bar-track"><div class="bar-fill" data-height="90%"></div></div>
+                        <span class="bar-day">TUE</span>
+                    </div>
+                    <div class="bar-col">
+                        <div class="bar-track"><div class="bar-fill" data-height="60%"></div></div>
+                        <span class="bar-day">WED</span>
+                    </div>
+                    <div class="bar-col">
+                        <div class="bar-track"><div class="bar-fill" data-height="85%"></div></div>
+                        <span class="bar-day">THU</span>
+                    </div>
+                    <div class="bar-col">
+                        <div class="bar-track"><div class="bar-fill" data-height="70%"></div></div>
+                        <span class="bar-day">FRI</span>
+                    </div>
+                    <div class="bar-col">
+                        <div class="bar-track"><div class="bar-fill" data-height="40%"></div></div>
+                        <span class="bar-day">SAT</span>
+                    </div>
+                    <div class="bar-col">
+                        <div class="bar-track"><div class="bar-fill" data-height="30%"></div></div>
+                        <span class="bar-day">SUN</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Today's Schedule -->
+            <div class="glass-panel panel">
+                <div class="panel-header">
+                    <h3 class="panel-title">
+                        <span style="color: var(--purple);">📅</span>
+                        Today's Classes
+                    </h3>
+                    <a href="timetable.html" class="badge badge-purple" style="cursor: pointer;">Full Matrix →</a>
+                </div>
+
+                <div class="schedule-list" id="todayScheduleList">
+                    <!-- Populated dynamically from timetable store -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Lower Section: Activity Stream & Quick Launch -->
+        <div class="dashboard-grid">
+            <div class="glass-panel panel">
+                <div class="panel-header">
+                    <h3 class="panel-title">
+                        <span style="color: var(--gold);">⚡</span>
+                        Recent Activity & Updates
+                    </h3>
+                    <span class="badge badge-gold">Real-time</span>
+                </div>
+
+                <div class="activity-list" id="recentActivityList">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+
+            <div class="glass-panel panel">
+                <div class="panel-header">
+                    <h3 class="panel-title">
+                        <span style="color: var(--emerald);">🚀</span>
+                        Quick Operations
+                    </h3>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <a href="wellness.html" class="btn btn-secondary" style="justify-content: flex-start;">
+                        <span>⏱</span> Start 25min Pomodoro Focus
+                    </a>
+                    <a href="timetable.html" class="btn btn-secondary" style="justify-content: flex-start;">
+                        <span>▦</span> Edit Weekly Schedule
+                    </a>
+                    <a href="academics.html" class="btn btn-secondary" style="justify-content: flex-start;">
+                        <span>🎓</span> Calculate Target GPA
+                    </a>
+                    <a href="profile.html" class="btn btn-secondary" style="justify-content: flex-start;">
+                        <span>💾</span> Backup & Export JSON
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Scripts -->
+<script src="js/store.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/app.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

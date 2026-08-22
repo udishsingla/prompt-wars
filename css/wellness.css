@@ -1,0 +1,203 @@
+/* =========================================================
+   STUDENTVERSE — WELLNESS SPECIFIC STYLES
+========================================================= */
+
+.wellness-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 24px;
+    margin-bottom: 36px;
+}
+
+/* Pomodoro Focus Hub */
+.pomodoro-card {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(14, 23, 48, 0.95) 0%, rgba(26, 18, 56, 0.8) 100%);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(168, 85, 247, 0.15);
+}
+
+.pomo-modes {
+    display: flex;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.04);
+    padding: 4px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-subtle);
+    margin-bottom: 24px;
+}
+
+.pomo-mode-btn {
+    padding: 6px 14px;
+    border-radius: var(--radius-full);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    transition: all var(--transition-fast);
+}
+
+.pomo-mode-btn.active {
+    background: var(--purple);
+    color: #ffffff;
+    box-shadow: 0 0 12px var(--purple-glow);
+}
+
+.pomo-timer-display {
+    font-size: 64px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    color: #ffffff;
+    margin: 10px 0 24px;
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0 0 25px rgba(168, 85, 247, 0.4);
+}
+
+.pomo-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* Ambient Audio Widget */
+.ambient-box {
+    width: 100%;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.ambient-options {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.ambient-btn {
+    padding: 8px 14px;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-subtle);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all var(--transition-fast);
+}
+
+.ambient-btn.active {
+    background: rgba(56, 189, 248, 0.15);
+    border-color: var(--cyan);
+    color: var(--cyan);
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
+}
+
+/* Mood & Energy Hub */
+.mood-options {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.mood-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 8px;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-subtle);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.mood-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-3px);
+}
+
+.mood-btn.active {
+    background: rgba(56, 189, 248, 0.15);
+    border-color: var(--cyan);
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+    transform: translateY(-3px);
+}
+
+.mood-emoji {
+    font-size: 24px;
+}
+
+.mood-text {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+/* Water Intake Ring */
+.water-tracker-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 26px;
+}
+
+.water-ring-container {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    margin: 16px 0;
+}
+
+.water-ring-svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.water-ring-bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.06);
+    stroke-width: 10;
+}
+
+.water-ring-progress {
+    fill: none;
+    stroke: var(--cyan);
+    stroke-width: 10;
+    stroke-linecap: round;
+    stroke-dasharray: 377;
+    stroke-dashoffset: 377;
+    transition: stroke-dashoffset 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    filter: drop-shadow(0 0 8px var(--cyan));
+}
+
+.water-ring-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.water-amount {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.water-target {
+    font-size: 11px;
+    color: var(--text-muted);
+}

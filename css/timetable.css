@@ -1,0 +1,146 @@
+/* =========================================================
+   STUDENTVERSE — TIMETABLE SPECIFIC STYLES
+========================================================= */
+
+.timetable-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.day-filters {
+    display: flex;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 4px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+}
+
+.day-btn {
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text-muted);
+    transition: all var(--transition-fast);
+}
+
+.day-btn:hover {
+    color: #ffffff;
+}
+
+.day-btn.active {
+    background: var(--cyan);
+    color: #03050c;
+    box-shadow: 0 0 12px var(--cyan-glow);
+}
+
+/* Timetable Matrix Grid */
+.timetable-grid-wrapper {
+    overflow-x: auto;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-subtle);
+    background: var(--card-bg);
+}
+
+.timetable-matrix {
+    display: grid;
+    grid-template-columns: 90px repeat(5, minmax(160px, 1fr));
+    min-width: 900px;
+}
+
+.tt-cell {
+    padding: 16px 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    border-right: 1px solid rgba(255, 255, 255, 0.04);
+    min-height: 100px;
+    position: relative;
+    transition: background var(--transition-fast);
+}
+
+.tt-cell:hover:not(.tt-header):not(.tt-time) {
+    background: rgba(56, 189, 248, 0.04);
+    cursor: pointer;
+}
+
+.tt-header {
+    background: rgba(14, 23, 48, 0.85);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--cyan);
+    text-align: center;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.tt-time {
+    background: rgba(10, 16, 35, 0.6);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tt-slot-card {
+    height: 100%;
+    padding: 10px;
+    border-radius: var(--radius-sm);
+    background: rgba(56, 189, 248, 0.12);
+    border-left: 3px solid var(--cyan);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all var(--transition-fast);
+}
+
+.tt-slot-card:hover {
+    transform: scale(1.02);
+    filter: brightness(1.15);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.tt-slot-subject {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 4px;
+}
+
+.tt-slot-room {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.tt-slot-prof {
+    font-size: 11px;
+    color: var(--cyan);
+    margin-top: 6px;
+}
+
+.tt-slot-purple {
+    background: rgba(168, 85, 247, 0.12);
+    border-left-color: var(--purple);
+}
+.tt-slot-purple .tt-slot-prof { color: var(--purple); }
+
+.tt-slot-gold {
+    background: rgba(251, 191, 36, 0.12);
+    border-left-color: var(--gold);
+}
+.tt-slot-gold .tt-slot-prof { color: var(--gold); }
+
+.tt-slot-emerald {
+    background: rgba(16, 185, 129, 0.12);
+    border-left-color: var(--emerald);
+}
+.tt-slot-emerald .tt-slot-prof { color: var(--emerald); }

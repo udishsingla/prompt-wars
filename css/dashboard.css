@@ -1,0 +1,276 @@
+/* =========================================================
+   STUDENTVERSE — DASHBOARD SPECIFIC STYLES
+========================================================= */
+
+.dashboard-hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.hero-title {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.hero-subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-bottom: 32px;
+}
+
+.stat-card {
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.stat-card::after {
+    content: "";
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    filter: blur(40px);
+    pointer-events: none;
+    opacity: 0.2;
+}
+
+.stat-card.cyan::after { background: var(--cyan); }
+.stat-card.purple::after { background: var(--purple); }
+.stat-card.gold::after { background: var(--gold); }
+.stat-card.emerald::after { background: var(--emerald); }
+
+.stat-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.stat-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.stat-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.stat-value {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    color: #ffffff;
+    margin-bottom: 6px;
+}
+
+.stat-sub {
+    font-size: 12px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Dashboard Panels Layout */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.panel {
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+}
+
+.panel-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Workload Chart */
+.workload-bars {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    height: 180px;
+    padding: 20px 10px 10px;
+    gap: 14px;
+}
+
+.bar-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    height: 100%;
+    justify-content: flex-end;
+}
+
+.bar-track {
+    width: 100%;
+    max-width: 32px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: var(--radius-full);
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+}
+
+.bar-fill {
+    width: 100%;
+    height: 0%;
+    border-radius: var(--radius-full);
+    background: linear-gradient(180deg, var(--cyan) 0%, var(--purple) 100%);
+    box-shadow: 0 0 12px var(--cyan-glow);
+    transition: height 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bar-day {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+/* Schedule List on Dashboard */
+.schedule-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.schedule-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-subtle);
+    transition: all var(--transition-fast);
+}
+
+.schedule-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--border-active);
+    transform: translateX(4px);
+}
+
+.schedule-time {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--cyan);
+    min-width: 65px;
+}
+
+.schedule-info {
+    flex-grow: 1;
+}
+
+.schedule-name {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.schedule-meta {
+    font-size: 11.5px;
+    color: var(--text-muted);
+}
+
+/* Recent Activity */
+.activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.activity-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.activity-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--cyan);
+    margin-top: 6px;
+    box-shadow: 0 0 8px var(--cyan);
+    flex-shrink: 0;
+}
+
+.activity-text {
+    font-size: 13px;
+    color: var(--text-secondary);
+    flex-grow: 1;
+}
+
+.activity-time {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+@media (max-width: 992px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}

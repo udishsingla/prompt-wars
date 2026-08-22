@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudentVerse — Wellness & Focus</title>
+    <meta name="description" content="Student mental health and focus center: Pomodoro timer, ambient noise player, mood logs and hydration tracker.">
+    <meta name="theme-color" content="#03050c">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/wellness.css">
+</head>
+<body>
+
+<!-- Page Loader -->
+<div id="pageLoader">
+    <div class="loader-content">
+        <div class="loader-logo">WELLNESS</div>
+        <div class="loader-line"><div class="loader-progress"></div></div>
+    </div>
+</div>
+
+<div class="app-layout">
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <a href="dashboard.html" class="logo-container">
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+            </div>
+            <div class="logo-text">StudentVerse</div>
+        </a>
+
+        <div class="nav-section">
+            <div class="nav-title">WORKSPACE</div>
+            <a href="dashboard.html" class="nav-item">
+                <span class="nav-icon">⌂</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="academics.html" class="nav-item">
+                <span class="nav-icon">▣</span>
+                <span>Academics</span>
+            </a>
+            <a href="timetable.html" class="nav-item">
+                <span class="nav-icon">▦</span>
+                <span>Timetable</span>
+            </a>
+            <a href="goals.html" class="nav-item">
+                <span class="nav-icon">◎</span>
+                <span>Goals</span>
+            </a>
+            <a href="wellness.html" class="nav-item active">
+                <span class="nav-icon">◌</span>
+                <span>Wellness</span>
+            </a>
+
+            <div class="nav-title">ACCOUNT</div>
+            <a href="profile.html" class="nav-item">
+                <span class="nav-icon">○</span>
+                <span>Profile & ID</span>
+            </a>
+        </div>
+
+        <div class="sidebar-bottom">
+            <a href="profile.html" class="profile-mini">
+                <div class="avatar-mini" id="sidebarProfileAvatar">⚡</div>
+                <div class="profile-mini-info">
+                    <div class="profile-mini-name" id="sidebarProfileName">Alex Mercer</div>
+                    <div class="profile-mini-role" id="sidebarProfileRole">Computer Science</div>
+                </div>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="topbar">
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+
+            <button class="search-command-btn">
+                <span>🔍</span>
+                <span class="search-command-text">Quick Search or Action...</span>
+                <span class="kbd-shortcut">Ctrl + K</span>
+            </button>
+
+            <div class="topbar-actions">
+                <div class="topbar-live-clock" id="topbarClock">--:--:--</div>
+                <a href="profile.html" class="topbar-btn" title="Profile">👤</a>
+            </div>
+        </header>
+
+        <div style="margin-bottom: 32px;">
+            <h1 class="hero-title">Wellness & Focus Sanctuary ◌</h1>
+            <p class="hero-subtitle">Optimize mental clarity, log daily hydration and enter deep flow state with the Pomodoro engine.</p>
+        </div>
+
+        <!-- Top Overview Stats -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 32px;">
+            <div class="glass-panel" style="padding: 20px; text-align: center;">
+                <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Focus Logged Today</div>
+                <div style="font-size: 28px; font-weight: 800; color: var(--cyan);" id="focusMinsToday">75m</div>
+            </div>
+            <div class="glass-panel" style="padding: 20px; text-align: center;">
+                <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Mindfulness Streak</div>
+                <div style="font-size: 28px; font-weight: 800; color: var(--emerald);" id="streakDaysCount">14 Days 🔥</div>
+            </div>
+        </div>
+
+        <div class="wellness-grid">
+            <!-- 1. Pomodoro Focus Engine -->
+            <div class="glass-panel pomodoro-card">
+                <div class="pomo-modes">
+                    <button class="pomo-mode-btn active" data-mode="focus">25m Focus</button>
+                    <button class="pomo-mode-btn" data-mode="shortBreak">5m Short Break</button>
+                    <button class="pomo-mode-btn" data-mode="longBreak">15m Long Break</button>
+                </div>
+
+                <div class="pomo-timer-display" id="pomoDisplay">25:00</div>
+
+                <div class="pomo-controls">
+                    <button class="btn btn-primary" id="pomoPlayBtn" style="padding: 12px 28px; font-size: 15px;">
+                        ▶ Start
+                    </button>
+                    <button class="btn btn-secondary" id="pomoResetBtn">
+                        ↺ Reset
+                    </button>
+                </div>
+
+                <!-- Ambient Sound Player inside Pomodoro Card -->
+                <div class="ambient-box">
+                    <div style="font-size: 11.5px; font-weight: 700; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase;">
+                        🎧 Ambient Audio Generator
+                    </div>
+                    <div class="ambient-options">
+                        <button class="ambient-btn" data-sound="rain">🌧 Rain</button>
+                        <button class="ambient-btn" data-sound="space">🪐 Cosmic</button>
+                        <button class="ambient-btn" data-sound="white">📻 White Noise</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Daily Mood & Energy Tracker -->
+            <div class="glass-panel" style="padding: 28px; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h3 style="font-size: 17px; font-weight: 700; color: #ffffff; margin-bottom: 4px;">Daily Mood Check-in</h3>
+                    <p style="font-size: 12.5px; color: var(--text-muted);">How are you feeling right now in this study session?</p>
+
+                    <div class="mood-options">
+                        <div class="mood-btn" data-mood="Energetic">
+                            <span class="mood-emoji">⚡</span>
+                            <span class="mood-text">Active</span>
+                        </div>
+                        <div class="mood-btn active" data-mood="Focused">
+                            <span class="mood-emoji">🧘</span>
+                            <span class="mood-text">Focused</span>
+                        </div>
+                        <div class="mood-btn" data-mood="Calm">
+                            <span class="mood-emoji">😌</span>
+                            <span class="mood-text">Calm</span>
+                        </div>
+                        <div class="mood-btn" data-mood="Tired">
+                            <span class="mood-emoji">😴</span>
+                            <span class="mood-text">Tired</span>
+                        </div>
+                        <div class="mood-btn" data-mood="Stressed">
+                            <span class="mood-emoji">🤯</span>
+                            <span class="mood-text">Busy</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span style="font-size: 12px; font-weight: 600; color: var(--text-secondary);">Energy Level</span>
+                        <strong style="font-size: 13px; color: var(--gold);" id="energyValue">85%</strong>
+                    </div>
+                    <input type="range" min="10" max="100" value="85" class="goal-slider" id="energySlider">
+                </div>
+            </div>
+
+            <!-- 3. Water Intake Tracker -->
+            <div class="glass-panel water-tracker-card">
+                <h3 style="font-size: 17px; font-weight: 700; color: #ffffff;">Daily Hydration</h3>
+                <p style="font-size: 12.5px; color: var(--text-muted);">Target: 2,500 ml per day</p>
+
+                <div class="water-ring-container">
+                    <svg class="water-ring-svg" viewBox="0 0 140 140">
+                        <circle class="water-ring-bg" cx="70" cy="70" r="60"></circle>
+                        <circle class="water-ring-progress" id="waterRingProgress" cx="70" cy="70" r="60"></circle>
+                    </svg>
+                    <div class="water-ring-text">
+                        <span style="font-size: 20px;">💧</span>
+                        <div class="water-amount" id="waterAmountText">1,750ml</div>
+                        <div class="water-target">of 2.5L</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn btn-secondary" id="addWater250Btn" style="font-size: 12px; padding: 6px 12px;">+250ml</button>
+                    <button class="btn btn-secondary" id="addWater500Btn" style="font-size: 12px; padding: 6px 12px;">+500ml</button>
+                    <button class="btn btn-secondary" id="resetWaterBtn" style="font-size: 12px; padding: 6px 12px;">↺ Reset</button>
+                </div>
+            </div>
+
+            <!-- 4. Mindfulness & Sleep Guide -->
+            <div class="glass-panel" style="padding: 28px; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h3 style="font-size: 17px; font-weight: 700; color: #ffffff; margin-bottom: 6px;">4-7-8 Breathing Guide</h3>
+                    <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.6;">
+                        Inhale quietly through the nose for <strong>4 seconds</strong>, hold breath for <strong>7 seconds</strong>, and exhale completely through mouth for <strong>8 seconds</strong>.
+                    </p>
+                </div>
+
+                <div style="text-align: center; margin: 16px 0;">
+                    <div style="width: 80px; height: 80px; border-radius: 50%; background: radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, transparent 70%); border: 2px solid var(--cyan); margin: 0 auto; display: flex; align-items: center; justify-content: center; animation: breathGlow 8s infinite ease-in-out;">
+                        <span style="font-size: 11px; font-weight: 700; color: var(--cyan); letter-spacing: 1px;">BREATHE</span>
+                    </div>
+                </div>
+
+                <div style="font-size: 11.5px; color: var(--text-muted); text-align: center;">
+                    Practiced regularly, 4-7-8 breathing lowers stress and boosts deep work focus.
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<style>
+@keyframes breathGlow {
+    0%, 100% { transform: scale(0.9); opacity: 0.6; }
+    50% { transform: scale(1.2); opacity: 1; box-shadow: 0 0 30px rgba(56, 189, 248, 0.4); }
+}
+</style>
+
+<!-- Scripts -->
+<script src="js/store.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/app.js"></script>
+<script src="js/wellness.js"></script>
+</body>
+</html>

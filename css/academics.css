@@ -1,0 +1,231 @@
+/* =========================================================
+   STUDENTVERSE — ACADEMICS SPECIFIC STYLES
+========================================================= */
+
+.academics-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.gpa-summary-card {
+    background: linear-gradient(135deg, rgba(14, 23, 48, 0.9) 0%, rgba(20, 30, 65, 0.8) 100%);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: var(--radius-xl);
+    padding: 30px;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(56, 189, 248, 0.1);
+}
+
+.gpa-main-display {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+}
+
+.gpa-big-number {
+    font-size: 54px;
+    font-weight: 800;
+    line-height: 1;
+    background: linear-gradient(135deg, #ffffff 40%, var(--cyan) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.gpa-scale {
+    font-size: 18px;
+    color: var(--text-muted);
+}
+
+.gpa-breakdown {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+}
+
+.gpa-stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.gpa-stat-title {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.gpa-stat-val {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* Course Cards Grid */
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+    margin-bottom: 36px;
+}
+
+.course-card {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    position: relative;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    background: var(--card-bg);
+    transition: all var(--transition-normal);
+}
+
+.course-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(56, 189, 248, 0.4);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(56, 189, 248, 0.15);
+}
+
+.course-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.course-code {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--cyan);
+}
+
+.course-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.course-instructor {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.course-progress-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.progress-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.progress-bar-track {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--cyan), var(--purple));
+    border-radius: 999px;
+    transition: width 0.8s ease;
+}
+
+/* Syllabus Interactive List */
+.syllabus-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.syllabus-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.syllabus-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.syllabus-item.completed {
+    color: var(--text-muted);
+    text-decoration: line-through;
+    border-color: rgba(16, 185, 129, 0.2);
+}
+
+.syllabus-checkbox {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    border: 1px solid var(--cyan);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: transparent;
+    cursor: pointer;
+}
+
+.syllabus-item.completed .syllabus-checkbox {
+    background: var(--emerald);
+    border-color: var(--emerald);
+    color: #ffffff;
+}
+
+/* Calculator Table */
+.calc-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.calc-table th {
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.calc-table td {
+    padding: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.calc-row-delete {
+    color: #fb7185;
+    cursor: pointer;
+    font-size: 16px;
+}
